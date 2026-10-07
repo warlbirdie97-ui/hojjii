@@ -28,15 +28,16 @@
       </div>
     </header>
     <div class="page-shell">
-      <nav class="tabs" role="tablist" aria-label="업무 단계">
-        <button class="tab is-active" id="tab-factory" role="tab" aria-selected="true" aria-controls="guide-content" data-section="factory"><span class="tab-number">01</span><span class="tab-label">공장찾기</span></button>
-        <button class="tab" id="tab-selection" role="tab" aria-selected="false" aria-controls="guide-content" tabindex="-1" data-section="selection"><span class="tab-number">02</span><span class="tab-label">공장선정</span></button>
-        <button class="tab" id="tab-brief" role="tab" aria-selected="false" aria-controls="guide-content" tabindex="-1" data-section="brief"><span class="tab-number">03</span><span class="tab-label">작업지시서 작성</span></button>
-        <button class="tab" id="tab-quote" role="tab" aria-selected="false" aria-controls="guide-content" tabindex="-1" data-section="quote"><span class="tab-number">04</span><span class="tab-label">견적확인</span></button>
-      </nav>
+      <div class="guide-navigation">
+        <nav class="category-menu" aria-label="대분류">
+          <a class="category-link is-active" data-category="factory" href="#factory" aria-current="true">공장찾기</a>
+          <a class="category-link" data-category="brief" href="#brief">작업지시서</a>
+        </nav>
+        <nav id="section-navigation" class="page-menu" aria-label="공장찾기 내 페이지"></nav>
+      </div>
       <div id="section-heading" class="section-heading"></div>
       <div class="content-layout">
-        <main id="guide-content" role="tabpanel" aria-labelledby="tab-factory" tabindex="0"></main>
+        <main id="guide-content" aria-labelledby="page-title" tabindex="-1"></main>
         <aside id="guide-sidebar" class="sidebar" aria-label="목차와 참고자료"></aside>
       </div>
       <footer class="site-footer"><span>CARGO CONTAINER</span><p>공장 찾기부터 작업지시서까지, 순서대로 확인한다.</p></footer>

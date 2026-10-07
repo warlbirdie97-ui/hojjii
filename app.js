@@ -13,7 +13,7 @@ const notice = (title, text) => `<div class="notice"><span class="notice-title">
 
 const sectionData = [
   {
-    id: 'factory', number: '01', title: '공장찾기', summary: '제조업체를 찾고, 담당자와 제작 가능 여부를 확인한다.', range: '01—09',
+    id: 'factory', title: '공장 검색·상담', summary: '제조업체를 찾고, 담당자와 제작 가능 여부를 확인한다.',
     groups: [
       { id: 'factory-search', title: '검색과 후보 선정', steps: [
         { n: 1, title: '제조업체를 검색한다', text: '알리바바 제조업체 페이지에 접속해 찾으려는 제품의 검색어를 입력한다.', extra: `<a class="inline-link" href="https://www.alibaba.com/factory/index.html" target="_blank" rel="noopener noreferrer">알리바바 제조업체 페이지 ${icons.external}</a>` },
@@ -33,7 +33,7 @@ const sectionData = [
     ],
   },
   {
-    id: 'selection', number: '02', title: '공장선정', summary: '같은 기준으로 조건을 받고, 샘플을 비교해 공장을 선정한다.', range: '10—13',
+    id: 'selection', title: '샘플 비교·선정', summary: '같은 기준으로 조건을 받고, 샘플을 비교해 공장을 선정한다.',
     groups: [
       { id: 'selection-information', title: '공장 정보와 초기 견적', steps: [
         { n: 10, title: '공장별 기본 정보와 제작 조건을 확인한다', text: 'MOQ, 단가, MOQ 기준 총액, 양산 기간은 레퍼런스 제품과 동일하게 생산하는 조건으로 받는다.', extra: '<p class="term-note"><strong>레퍼런스 제품</strong> 제작하려는 제품을 설명하거나 비교할 때 참고하는 기존 제품.</p>' + informationTable() },
@@ -46,7 +46,7 @@ const sectionData = [
     ],
   },
   {
-    id: 'brief', number: '03', title: '작업지시서 작성', summary: '제작 의도를 설명하고, 외형부터 기능까지 구체적으로 작성한다.', range: '14—23',
+    id: 'brief', title: '작업지시서 작성', summary: '제작 의도를 설명하고, 외형부터 기능까지 구체적으로 작성한다.',
     groups: [
       { id: 'brief-reference', title: '레퍼런스와 제작 방향', steps: [
         { n: 14, title: '레퍼런스 제품을 설명한다', text: '선정한 공장과 협의할 제품의 레퍼런스를 준비한다. 시장에서 잘 판매되는 제품의 사진·링크를 전달하고, 제품의 특징과 장단점을 설명한다.' },
@@ -67,7 +67,7 @@ const sectionData = [
     ],
   },
   {
-    id: 'quote', number: '04', title: '견적확인', summary: '공장의 이해와 제작 가능 여부를 확인한 뒤 수량·가격을 협의한다.', range: '24—28',
+    id: 'quote', title: '전달·견적확인', summary: '공장의 이해와 제작 가능 여부를 확인한 뒤 수량·가격을 협의한다.',
     groups: [
       { id: 'quote-review', title: '전달과 내용 확인', steps: [
         { n: 24, title: '작업지시서와 자료를 전달한다', text: '레퍼런스와 제작 의도를 설명하고, 작업지시서와 사진·치수 자료를 공장에 전달한다.' },
@@ -99,7 +99,12 @@ const resources = [
   { title: '전체 업무절차서', meta: 'PDF · 12쪽', file: 'workflow.pdf' },
 ];
 
-const tabs = [...document.querySelectorAll('[role="tab"]')];
+const categories = [
+  { id: 'factory', title: '공장찾기', pages: [{ id: 'factory', label: '공장 검색·상담' }, { id: 'selection', label: '샘플 비교·선정' }] },
+  { id: 'brief', title: '작업지시서', pages: [{ id: 'brief', label: '작성 방법' }, { id: 'quote', label: '전달·견적확인' }] },
+];
+
+const categoryLinks = [...document.querySelectorAll('[data-category]')];
 const panel = document.querySelector('#guide-content');
 const dialog = document.querySelector('#image-preview');
 let toastTimeout;
@@ -110,26 +115,29 @@ function getSection() {
 
 function render() {
   const section = getSection();
-  const index = sectionData.indexOf(section);
-  const next = sectionData[index + 1];
-  document.title = `${section.title} · 카고컨테이너 업무 가이드`;
-  tabs.forEach((tab) => {
-    const selected = tab.dataset.section === section.id;
-    tab.classList.toggle('is-active', selected);
-    tab.setAttribute('aria-selected', String(selected));
-    tab.tabIndex = selected ? 0 : -1;
+  const category = categories.find((item) => item.pages.some((page) => page.id === section.id));
+  const related = category.pages.find((page) => page.id !== section.id);
+  document.title = `${section.title} · ${category.title} · 카고컨테이너 업무 가이드`;
+  categoryLinks.forEach((link) => {
+    const selected = link.dataset.category === category.id;
+    link.classList.toggle('is-active', selected);
+    if (selected) link.setAttribute('aria-current', 'true');
+    else link.removeAttribute('aria-current');
   });
-  panel.setAttribute('aria-labelledby', `tab-${section.id}`);
-  document.querySelector('#section-heading').innerHTML = `<div><p class="eyebrow">업무 순서 <span>${section.number} / 04</span></p><h1>${section.title}</h1><p class="section-summary">${section.summary}</p></div><div class="section-meta"><span class="step-range">STEP ${section.range}</span><button class="copy-link" type="button" data-copy-link>${icons.link}<span>링크 복사</span></button></div>`;
-  panel.innerHTML = section.groups.map((group) => `<section class="step-group" id="${group.id}" aria-labelledby="heading-${group.id}"><div class="group-heading"><h2 id="heading-${group.id}">${group.title}</h2><span>${group.steps.length}개 항목</span></div><div class="steps">${group.steps.map((step) => `<article class="step-card" id="step-${step.n}"><span class="step-number" aria-label="${step.n}번째 단계">${String(step.n).padStart(2, '0')}</span><div class="step-body"><h3>${step.title}</h3><p>${step.text}</p>${step.extra ?? ''}</div></article>`).join('')}</div>${group.note ?? ''}</section>`).join('') + (next ? `<div class="section-end-next"><span>다음 업무</span><button type="button" data-go-section="${next.id}">${next.title} ${icons.arrow}</button></div>` : '<div class="section-end-next"><span>전체 업무 순서를 확인했다.</span><button type="button" data-go-section="factory">공장찾기로 돌아가기 '+icons.arrow+'</button></div>');
-  document.querySelector('#guide-sidebar').innerHTML = `<div class="side-card"><p class="side-eyebrow">이 페이지의 순서</p><nav class="contents-list" aria-label="${section.title} 세부 순서">${section.groups.map((group, i) => `<button class="contents-link" type="button" data-scroll-target="${group.id}"><span>${String(i + 1).padStart(2, '0')}</span>${group.title}</button>`).join('')}</nav></div><div class="side-card resources-card"><p class="side-eyebrow">참고자료</p><h2>작업지시서 예시</h2><p class="resource-description">원본 자료를 열어 작성 방식을 참고한다.</p>${resources.map((resource) => `<a class="resource-link" href="./assets/docs/${resource.file}" target="_blank" rel="noopener noreferrer"><span class="resource-icon">${icons.document}</span><span><span class="resource-name">${resource.title}</span><span class="resource-meta">${resource.meta}</span></span><span class="arrow">${icons.external}</span></a>`).join('')}</div>${next ? `<div class="next-section"><p>다음 업무</p><button class="button" type="button" data-go-section="${next.id}">${next.title} ${icons.arrow}</button></div>` : ''}`;
+  const pageMenu = document.querySelector('#section-navigation');
+  pageMenu.setAttribute('aria-label', `${category.title} 내 페이지`);
+  pageMenu.innerHTML = category.pages.map((page) => `<a class="page-link${page.id === section.id ? ' is-active' : ''}" data-page="${page.id}" href="#${page.id}"${page.id === section.id ? ' aria-current="page"' : ''}>${page.label}</a>`).join('');
+  document.querySelector('#section-heading').innerHTML = `<div><h1 id="page-title" tabindex="-1">${section.title}</h1><p class="section-summary">${section.summary}</p></div><div class="section-meta"><button class="copy-link" type="button" data-copy-link>${icons.link}<span>링크 복사</span></button></div>`;
+  panel.innerHTML = section.groups.map((group) => `<section class="step-group" id="${group.id}" aria-labelledby="heading-${group.id}"><div class="group-heading"><h2 id="heading-${group.id}">${group.title}</h2><span>${group.steps.length}개 항목</span></div><div class="steps">${group.steps.map((step) => `<article class="step-card" id="step-${step.n}"><span class="step-number" aria-label="${step.n}번째 단계">${String(step.n).padStart(2, '0')}</span><div class="step-body"><h3>${step.title}</h3><p>${step.text}</p>${step.extra ?? ''}</div></article>`).join('')}</div>${group.note ?? ''}</section>`).join('');
+  panel.insertAdjacentHTML('beforeend', `<div class="section-end-next"><span>${category.title} 더 보기</span><a data-go-section="${related.id}" href="#${related.id}">${related.label} ${icons.arrow}</a></div>`);
+  document.querySelector('#guide-sidebar').innerHTML = `<div class="side-card"><p class="side-eyebrow">이 페이지 목차</p><nav class="contents-list" aria-label="${section.title} 목차">${section.groups.map((group, i) => `<button class="contents-link" type="button" data-scroll-target="${group.id}"><span>${String(i + 1).padStart(2, '0')}</span>${group.title}</button>`).join('')}</nav></div><div class="side-card resources-card"><p class="side-eyebrow">참고자료</p><h2>작업지시서 예시</h2><p class="resource-description">원본 자료를 열어 작성 방식을 참고한다.</p>${resources.map((resource) => `<a class="resource-link" href="./assets/docs/${resource.file}" target="_blank" rel="noopener noreferrer"><span class="resource-icon">${icons.document}</span><span><span class="resource-name">${resource.title}</span><span class="resource-meta">${resource.meta}</span></span><span class="arrow">${icons.external}</span></a>`).join('')}</div>`;
 }
 
 function navigate(id, { focus = false } = {}) {
   if (!sectionData.some((section) => section.id === id)) return;
   if (location.hash !== `#${id}`) history.pushState(null, '', `#${id}`);
   render();
-  if (focus) document.querySelector(`#tab-${id}`).focus({ preventScroll: true });
+  if (focus) document.querySelector('#page-title').focus({ preventScroll: true });
   window.scrollTo({ top: 0, behavior: 'instant' });
 }
 
@@ -157,7 +165,7 @@ async function copyLink() {
       input.remove();
       if (!copied) throw new Error('Copy unavailable');
     }
-    showToast('현재 탭의 링크를 복사했다.');
+    showToast('현재 페이지의 링크를 복사했다.');
   } catch {
     showToast('주소창의 링크를 직접 복사한다.');
   }
@@ -170,15 +178,12 @@ document.addEventListener('click', (event) => {
     panel.scrollIntoView({ block: 'start', behavior: 'instant' });
     return;
   }
-  if (event.target.closest('.brand')) {
+  const navigation = event.target.closest('[data-category], [data-page], [data-go-section], .brand');
+  if (navigation && !event.defaultPrevented && event.button === 0 && !event.metaKey && !event.ctrlKey && !event.shiftKey && !event.altKey) {
     event.preventDefault();
-    navigate('factory');
+    navigate(navigation.dataset.category ?? navigation.dataset.page ?? navigation.dataset.goSection ?? 'factory', { focus: true });
     return;
   }
-  const tab = event.target.closest('[data-section]');
-  if (tab) navigate(tab.dataset.section);
-  const next = event.target.closest('[data-go-section]');
-  if (next) navigate(next.dataset.goSection, { focus: true });
   const jump = event.target.closest('[data-scroll-target]');
   if (jump) document.getElementById(jump.dataset.scrollTarget)?.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth', block: 'start' });
   if (event.target.closest('[data-copy-link]')) copyLink();
@@ -191,15 +196,6 @@ document.addEventListener('click', (event) => {
     dialog.showModal();
   }
   if (event.target.closest('.lightbox-close') || event.target === dialog) dialog.close();
-});
-
-document.querySelector('.tabs').addEventListener('keydown', (event) => {
-  if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
-  const index = tabs.indexOf(event.target);
-  if (index < 0) return;
-  event.preventDefault();
-  const nextIndex = event.key === 'Home' ? 0 : event.key === 'End' ? tabs.length - 1 : (index + (event.key === 'ArrowRight' ? 1 : -1) + tabs.length) % tabs.length;
-  navigate(tabs[nextIndex].dataset.section, { focus: true });
 });
 
 window.addEventListener('hashchange', render);
