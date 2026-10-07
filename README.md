@@ -11,6 +11,7 @@
 - 페이지별 직접 링크와 링크 복사
 - 원본 작업지시서 캡처와 작성 예시
 - 모바일 화면, 키보드 메뉴 이동, 참고 이미지 확대
+- Pretendard 웹폰트, 화면 폭에 맞춘 문단·표·목차 배치
 - 온풍기·버티탭 원본 작업지시서와 공장·제작 업무절차서 PDF
 
 ## 로컬 실행
@@ -45,5 +46,6 @@ GitHub 저장소의 **Settings → Pages → Build and deployment → Source**�
 - `styles.css`: 화면 구성과 반응형 스타일
 - `assets/docs/`: 사용자 제공 PDF
 - `assets/images/`: 사용자 제공 문서에서 발췌한 참고 이미지
+- `assets/fonts/`: [Pretendard](https://github.com/orioncactus/pretendard)의 원본 가변 웹폰트와 SIL Open Font License. 외부 요청 없이 사이트에서 직접 제공한다.
 
 실제 제품 작업지시서는 한국어·중국어를 병기한다. 홈페이지 안내문은 한국어로 작성한다.
