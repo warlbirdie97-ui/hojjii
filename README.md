@@ -1,2 +1,42 @@
-# hojjii
-호준
+# 카고컨테이너 업무 가이드
+
+공장찾기 → 공장선정 → 작업지시서 작성 → 견적확인 순서로 구성한 정적 홈페이지.
+
+- 28개 업무 절차, 탭별 직접 링크와 링크 복사
+- 모바일 화면, 키보드 탭 이동, 참고 이미지 확대
+- 온풍기·버티탭 원본 작업지시서와 전체 업무절차서 PDF
+
+## 로컬 실행
+
+Node.js 20 이상을 사용한다. 별도 패키지 설치는 필요 없다.
+
+```sh
+npm run dev
+```
+
+개발 서버는 기본 4173 포트로 실행된다. `PORT`로 변경할 수 있다.
+
+```sh
+npm run check
+npm run build
+```
+
+빌드 결과는 `dist/`에 생성된다. HTML·CSS·JavaScript와 자료 파일만 포함한다.
+
+## 배포
+
+GitHub 저장소의 **Settings → Pages → Build and deployment → Source**에서 **GitHub Actions**를 선택한다.
+`.github/workflows/deploy-pages.yml`은 `main` 브랜치에 푸시되면 `dist/`를 GitHub Pages에 배포한다.
+저장소의 요금제와 권한이 Pages 사용을 지원해야 한다.
+
+다른 정적 호스팅을 사용할 경우 `dist/`의 내용을 업로드한다.
+프로젝트 하위 경로에서도 상대 경로로 작동한다. 서버 환경변수나 외부 API는 사용하지 않는다.
+
+## 내용 수정
+
+- `app.js`: 탭별 절차, 참고자료, 상호작용
+- `styles.css`: 화면 구성과 반응형 스타일
+- `assets/docs/`: 사용자 제공 PDF
+- `assets/images/`: 사용자 제공 문서에서 발췌한 참고 이미지
+
+실제 제품 작업지시서는 한국어·중국어를 병기한다. 홈페이지 안내문은 한국어로 작성한다.

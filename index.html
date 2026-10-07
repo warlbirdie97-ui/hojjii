@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#354831" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="description" content="카고컨테이너 업무 가이드. 공장 찾기부터 샘플 비교, 작업지시서 작성, 견적 확인까지 순서대로 확인한다." />
+    <title>공장찾기 · 카고컨테이너 업무 가이드</title>
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="./styles.css" />
+    <script src="./app.js" type="module"></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#guide-content">본문으로 이동</a>
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="brand" href="#factory" aria-label="카고컨테이너 업무 가이드 첫 화면">
+          <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 32 32" fill="none"><rect x="3" y="6" width="26" height="20" rx="2"/><path d="M10 7v18M16 7v18M22 7v18"/></svg></span>
+          <span class="brand-copy"><span class="brand-name">CARGO CONTAINER</span><span class="brand-label">업무 가이드</span></span>
+        </a>
+        <div class="header-actions">
+          <a class="button button-secondary" href="./assets/docs/workflow.pdf" target="_blank" rel="noopener noreferrer">
+            <svg aria-hidden="true" viewBox="0 0 24 24" fill="none"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 14h8M8 17h5"/></svg>
+            <span>전체 절차서</span><span class="pdf-label">PDF</span>
+          </a>
+        </div>
+      </div>
+    </header>
+    <div class="page-shell">
+      <nav class="tabs" role="tablist" aria-label="업무 단계">
+        <button class="tab is-active" id="tab-factory" role="tab" aria-selected="true" aria-controls="guide-content" data-section="factory"><span class="tab-number">01</span><span class="tab-label">공장찾기</span></button>
+        <button class="tab" id="tab-selection" role="tab" aria-selected="false" aria-controls="guide-content" tabindex="-1" data-section="selection"><span class="tab-number">02</span><span class="tab-label">공장선정</span></button>
+        <button class="tab" id="tab-brief" role="tab" aria-selected="false" aria-controls="guide-content" tabindex="-1" data-section="brief"><span class="tab-number">03</span><span class="tab-label">작업지시서 작성</span></button>
+        <button class="tab" id="tab-quote" role="tab" aria-selected="false" aria-controls="guide-content" tabindex="-1" data-section="quote"><span class="tab-number">04</span><span class="tab-label">견적확인</span></button>
+      </nav>
+      <div id="section-heading" class="section-heading"></div>
+      <div class="content-layout">
+        <main id="guide-content" role="tabpanel" aria-labelledby="tab-factory" tabindex="0"></main>
+        <aside id="guide-sidebar" class="sidebar" aria-label="목차와 참고자료"></aside>
+      </div>
+      <footer class="site-footer"><span>CARGO CONTAINER</span><p>공장 찾기부터 작업지시서까지, 순서대로 확인한다.</p></footer>
+    </div>
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    <dialog class="lightbox" id="image-preview" aria-labelledby="preview-caption">
+      <button class="lightbox-close" type="button" aria-label="이미지 닫기"><svg viewBox="0 0 24 24" fill="none"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
+      <img id="preview-image" alt="" />
+      <p id="preview-caption" class="lightbox-caption"></p>
+    </dialog>
+    <noscript><p class="noscript-notice">업무 가이드를 보려면 JavaScript를 활성화한다. <a href="./assets/docs/workflow.pdf">전체 절차서 PDF 열기</a></p></noscript>
+  </body>
+</html>
