@@ -22,7 +22,7 @@ const sectionData = [
       ] },
       { id: 'factory-contact', title: '담당자 상담', steps: [
         { n: 4, title: '채팅으로 상담을 시작한다', text: '후보 업체의 ‘지금 채팅하기’를 누르고, 인사 후 제품 상담이 가능한지 묻는다.' },
-        { n: 5, title: '실제 담당자와 연결한다', text: '별 모양 표시가 있는 AI 자동응답이면 매니저 연결을 요청한다.' },
+        { n: 5, title: '실제 담당자와 연결한다', text: '별 모양 표시가 있는 AI 자동응답이면 매니저 연결을 요청한다.', extra: `<figure class="instruction-image">${imageButton('./assets/images/ai-manager-chat.png', '빨간 원으로 표시한 AI 자동응답의 별 모양과 매니저 연결 요청 예시')}<figcaption>별 모양 표시를 확인하고, 매니저와 소통하고 싶다고 요청한다.</figcaption></figure>` },
         { n: 6, title: '회사와 참고 제품을 소개한다', text: '한국의 캠핑회사라고 간단히 소개한다. 참고할 기존 제품의 사진과 특징을 전달하고, 해당 제품을 취급하는지 확인한다.' },
         { n: 7, title: '제작 역량을 확인한다', text: '자체 공장 운영 여부, OEM 가능 여부, 내부 디자이너 또는 엔지니어 보유 여부를 확인한다.', extra: '<p class="term-note"><strong>OEM</strong> 우리 요구에 맞춰 제품을 대신 제조하는 방식.</p>' },
       ] },
@@ -94,14 +94,17 @@ function informationTable() {
 }
 
 const resources = [
-  { title: '온풍기 작업지시서', meta: 'PDF · 3쪽', file: 'heater.pdf' },
-  { title: '버티탭 작업지시서', meta: 'PDF · 5쪽', file: 'vertitap.pdf' },
-  { title: '전체 업무절차서', meta: 'PDF · 12쪽', file: 'workflow.pdf' },
+  { title: '온풍기 작업지시서', meta: 'PDF · 3쪽 · 한국어·중국어', file: 'heater.pdf', description: '제품 배경과 부위별 사진, 외형·기능 요구사항의 작성 방식을 참고한다.' },
+  { title: '버티탭 작업지시서', meta: 'PDF · 5쪽 · 한국어·중국어', file: 'vertitap.pdf', description: '실측 치수와 디자인 변경사항을 사진으로 전달하는 방식을 참고한다.' },
+  { title: '전체 업무절차서', meta: 'PDF · 12쪽', file: 'workflow.pdf', description: '공장 찾기부터 작업지시서 작성과 견적 확인까지 전체 업무 절차를 확인한다.' },
 ];
+
+const resourceSection = { id: 'resources', title: '참고자료', summary: '업무절차서와 제품별 작업지시서 원본을 확인한다.' };
 
 const categories = [
   { id: 'factory', title: '공장찾기', pages: [{ id: 'factory', label: '공장 검색·상담' }, { id: 'selection', label: '샘플 비교·선정' }] },
   { id: 'brief', title: '작업지시서', pages: [{ id: 'brief', label: '작성 방법' }, { id: 'quote', label: '전달·견적확인' }] },
+  { id: 'resources', title: '참고자료', pages: [{ id: 'resources', label: '자료 모음' }] },
 ];
 
 const categoryLinks = [...document.querySelectorAll('[data-category]')];
@@ -110,6 +113,7 @@ const dialog = document.querySelector('#image-preview');
 let toastTimeout;
 
 function getSection() {
+  if (location.hash === '#resources') return resourceSection;
   return sectionData.find((section) => section.id === location.hash.slice(1)) ?? sectionData[0];
 }
 
@@ -117,24 +121,34 @@ function render() {
   const section = getSection();
   const category = categories.find((item) => item.pages.some((page) => page.id === section.id));
   const related = category.pages.find((page) => page.id !== section.id);
-  document.title = `${section.title} · ${category.title} · 카고컨테이너 업무 가이드`;
+  document.title = `${section.title}${section.title === category.title ? '' : ` · ${category.title}`} · 카고컨테이너 업무 가이드`;
   categoryLinks.forEach((link) => {
     const selected = link.dataset.category === category.id;
     link.classList.toggle('is-active', selected);
     if (selected) link.setAttribute('aria-current', 'true');
     else link.removeAttribute('aria-current');
   });
+  const isResources = section.id === 'resources';
+  const sidebar = document.querySelector('#guide-sidebar');
+  sidebar.hidden = isResources;
+  document.querySelector('.content-layout').classList.toggle('is-resources', isResources);
   const pageMenu = document.querySelector('#section-navigation');
+  pageMenu.hidden = isResources;
   pageMenu.setAttribute('aria-label', `${category.title} 내 페이지`);
   pageMenu.innerHTML = category.pages.map((page) => `<a class="page-link${page.id === section.id ? ' is-active' : ''}" data-page="${page.id}" href="#${page.id}"${page.id === section.id ? ' aria-current="page"' : ''}>${page.label}</a>`).join('');
   document.querySelector('#section-heading').innerHTML = `<div><h1 id="page-title" tabindex="-1">${section.title}</h1><p class="section-summary">${section.summary}</p></div><div class="section-meta"><button class="copy-link" type="button" data-copy-link>${icons.link}<span>링크 복사</span></button></div>`;
-  panel.innerHTML = section.groups.map((group) => `<section class="step-group" id="${group.id}" aria-labelledby="heading-${group.id}"><div class="group-heading"><h2 id="heading-${group.id}">${group.title}</h2><span>${group.steps.length}개 항목</span></div><div class="steps">${group.steps.map((step) => `<article class="step-card" id="step-${step.n}"><span class="step-number" aria-label="${step.n}번째 단계">${String(step.n).padStart(2, '0')}</span><div class="step-body"><h3>${step.title}</h3><p>${step.text}</p>${step.extra ?? ''}</div></article>`).join('')}</div>${group.note ?? ''}</section>`).join('');
+  if (isResources) {
+    sidebar.replaceChildren();
+    panel.innerHTML = `<section class="resource-library" aria-label="참고자료 목록">${resources.map((resource) => `<article class="resource-document"><span class="resource-icon" aria-hidden="true">${icons.document}</span><div class="resource-details"><h2>${resource.title}</h2><p class="resource-meta">${resource.meta}</p><p class="resource-description">${resource.description}</p></div><a class="button button-secondary" href="./assets/docs/${resource.file}" target="_blank" rel="noopener noreferrer" aria-label="${resource.title} PDF 열기 · 새 탭">PDF 열기 ${icons.external}</a></article>`).join('')}</section>`;
+    return;
+  }
+  panel.innerHTML = section.groups.map((group) => `<section class="step-group" id="${group.id}" aria-labelledby="heading-${group.id}"><div class="group-heading"><h2 id="heading-${group.id}">${group.title}</h2></div><div class="steps">${group.steps.map((step) => `<article class="step-card" id="step-${step.n}"><span class="step-number" aria-label="${step.n}번째 단계">${String(step.n).padStart(2, '0')}</span><div class="step-body"><h3>${step.title}</h3><p>${step.text}</p>${step.extra ?? ''}</div></article>`).join('')}</div>${group.note ?? ''}</section>`).join('');
   panel.insertAdjacentHTML('beforeend', `<div class="section-end-next"><span>${category.title} 더 보기</span><a data-go-section="${related.id}" href="#${related.id}">${related.label} ${icons.arrow}</a></div>`);
-  document.querySelector('#guide-sidebar').innerHTML = `<div class="side-card"><p class="side-eyebrow">이 페이지 목차</p><nav class="contents-list" aria-label="${section.title} 목차">${section.groups.map((group, i) => `<button class="contents-link" type="button" data-scroll-target="${group.id}"><span>${String(i + 1).padStart(2, '0')}</span>${group.title}</button>`).join('')}</nav></div><div class="side-card resources-card"><p class="side-eyebrow">참고자료</p><h2>작업지시서 예시</h2><p class="resource-description">원본 자료를 열어 작성 방식을 참고한다.</p>${resources.map((resource) => `<a class="resource-link" href="./assets/docs/${resource.file}" target="_blank" rel="noopener noreferrer"><span class="resource-icon">${icons.document}</span><span><span class="resource-name">${resource.title}</span><span class="resource-meta">${resource.meta}</span></span><span class="arrow">${icons.external}</span></a>`).join('')}</div>`;
+  sidebar.innerHTML = `<div class="toc-card"><h2 id="toc-title">이 페이지 목차</h2><nav class="contents-list" aria-label="${section.title} 목차">${section.groups.map((group, i) => `<button class="contents-link" type="button" data-scroll-target="${group.id}"><span>${String(i + 1).padStart(2, '0')}</span>${group.title}</button>`).join('')}</nav></div>`;
 }
 
 function navigate(id, { focus = false } = {}) {
-  if (!sectionData.some((section) => section.id === id)) return;
+  if (id !== 'resources' && !sectionData.some((section) => section.id === id)) return;
   if (location.hash !== `#${id}`) history.pushState(null, '', `#${id}`);
   render();
   if (focus) document.querySelector('#page-title').focus({ preventScroll: true });
