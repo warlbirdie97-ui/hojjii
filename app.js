@@ -9,6 +9,8 @@ const escapeHtml = (value) => String(value).replace(/[&<>"']/g, (c) => ({ '&': '
 
 const imageButton = (src, caption, className = '') => `<button class="image-trigger ${className}" type="button" data-image="${src}" data-caption="${escapeHtml(caption)}" aria-label="${escapeHtml(caption)} 확대 보기"><img src="${src}" alt="${escapeHtml(caption)}" loading="lazy" /><span class="image-hint">확대해서 보기 ↗</span></button>`;
 
+const documentExample = ({ src, document, page, title, description, file }) => `<figure class="document-example"><figcaption><span class="example-source">${document} · ${page}쪽 원문</span><strong>${title}</strong><p>${description}</p></figcaption>${imageButton(src, `${document} ${page}쪽 — ${title}`)}<a class="example-original" href="./assets/docs/${file}#page=${page}" target="_blank" rel="noopener noreferrer">원문에서 보기 ${icons.external}</a></figure>`;
+
 const notice = (title, text) => `<div class="notice"><span class="notice-title">${title}</span><p>${text}</p></div>`;
 
 const sectionData = [
@@ -23,13 +25,13 @@ const sectionData = [
       { id: 'factory-contact', title: '담당자 상담', steps: [
         { n: 4, title: '채팅으로 상담을 시작한다', text: '후보 업체의 ‘지금 채팅하기’를 누르고, 인사 후 제품 상담이 가능한지 묻는다.' },
         { n: 5, title: '실제 담당자와 연결한다', text: '별 모양 표시가 있는 AI 자동응답이면 매니저 연결을 요청한다.', extra: `<figure class="instruction-image">${imageButton('./assets/images/ai-manager-chat.png', '빨간 원으로 표시한 AI 자동응답의 별 모양과 매니저 연결 요청 예시')}<figcaption>별 모양 표시를 확인하고, 매니저와 소통하고 싶다고 요청한다.</figcaption></figure>` },
-        { n: 6, title: '회사와 참고 제품을 소개한다', text: '한국의 캠핑회사라고 간단히 소개한다. 참고할 기존 제품의 사진과 특징을 전달하고, 해당 제품을 취급하는지 확인한다.' },
-        { n: 7, title: '제작 역량을 확인한다', text: '자체 공장 운영 여부, OEM 가능 여부, 내부 디자이너 또는 엔지니어 보유 여부를 확인한다.', extra: '<p class="term-note"><strong>OEM</strong> 우리 요구에 맞춰 제품을 대신 제조하는 방식.</p>' },
+        { n: 6, title: '회사와 참고 제품을 소개한다', text: '회사와 참고할 제품을 소개한다.', points: ['한국의 캠핑회사라고 간단히 소개한다.', '참고 제품의 사진과 특징을 전달한다.', '해당 제품을 취급하는지 확인한다.'] },
+        { n: 7, title: '제작 역량을 확인한다', text: '아래 조건을 확인한다.', points: ['자체 공장을 운영하는지 확인한다.', 'OEM 생산이 가능한지 확인한다.', '내부 디자이너 또는 엔지니어를 보유하고 있는지 확인한다.'], extra: '<p class="term-note"><strong>OEM</strong> 우리 요구에 맞춰 제품을 대신 제조하는 방식.</p>' },
       ] },
       { id: 'factory-wechat', title: '위챗 이동과 회사 소개', steps: [
-        { n: 8, title: '위챗으로 대화를 이동한다', text: '앞의 세 항목이 모두 가능하거나 보유한 것으로 확인되면, 위챗으로 소통할 수 있는지 묻고 대화를 이동한다.' },
-        { n: 9, title: '회사소개서를 전달하고 카탈로그를 받는다', text: '위챗에서 카고컨테이너 회사소개서를 전달한다. 회사 규모와 한국 시장에서의 입지를 설명하고, 당사 제품 인지 여부를 확인한 뒤 공장의 제품 카탈로그를 받는다.' },
-      ], note: notice('연락 시 주의사항', '동일한 메시지를 여러 공장에 반복 복사해 발송하지 않는다. 인사말은 상황에 맞게 작성한다. 대화 시작부터 위챗 이동을 요청하지 않는다.') },
+        { n: 8, title: '위챗으로 대화를 이동한다', text: '자체 공장·OEM 생산·내부 디자이너 또는 엔지니어 보유 조건이 모두 충족된 것으로 확인되면, 위챗으로 소통 가능한지 묻고 대화를 이동한다.' },
+        { n: 9, title: '회사소개서를 전달하고 카탈로그를 받는다', text: '위챗에서 카고컨테이너 회사소개서를 전달한다.', points: ['회사 규모와 한국 시장에서의 입지를 설명한다.', '카고컨테이너 제품을 알고 있는지 확인한다.', '공장의 제품 카탈로그를 받는다.'] },
+      ], note: notice('연락 시 주의사항', '<strong>계정이 차단(밴)될 위험이 있으므로</strong> 동일한 메시지를 여러 공장에 반복 복사해 보내거나, 대화 시작부터 위챗 이동을 요청하지 않는다.</p><p>인사말은 상황에 맞게 작성하고, 제작 역량을 확인한 뒤 위챗 이동을 요청한다.') },
     ],
   },
   {
@@ -49,34 +51,34 @@ const sectionData = [
     id: 'brief', title: '작업지시서 작성', summary: '제작 의도를 설명하고, 외형부터 기능까지 구체적으로 작성한다.',
     groups: [
       { id: 'brief-reference', title: '레퍼런스와 제작 방향', steps: [
-        { n: 14, title: '레퍼런스 제품을 설명한다', text: '선정한 공장과 협의할 제품의 레퍼런스를 준비한다. 시장에서 잘 판매되는 제품의 사진·링크를 전달하고, 제품의 특징과 장단점을 설명한다.' },
-        { n: 15, title: '유지할 장점과 개선할 단점을 정리한다', text: '레퍼런스에서 가져올 장점과 개선할 단점을 정리한다. 무엇을 바꾸려는지와 왜 그렇게 제작하려는지를 연결해 설명한다.' },
+        { n: 1, title: '레퍼런스 제품을 설명한다', text: '시장에서 잘 판매되는 제품을 레퍼런스로 준비한다.', points: ['선정한 공장에 제품의 사진과 링크를 전달한다.', '제품의 주요 특징을 설명한다.', '장점과 단점을 구분해 정리한다.'] },
+        { n: 2, title: '유지할 장점과 개선할 단점을 정리한다', text: '레퍼런스에서 가져올 장점과 개선할 단점을 정리한다. 무엇을 바꾸려는지와 왜 그렇게 제작하려는지를 연결해 설명한다.' },
       ] },
       { id: 'brief-details', title: '치수·외형·기능 작성', steps: [
-        { n: 16, title: '샘플 보유 여부에 맞춰 치수를 전달한다', text: '공장이 레퍼런스 샘플을 보유하고 있는지 확인한다.', extra: '<dl class="detail-grid"><div class="detail-item"><dt>샘플 보유</dt><dd>동일하게 제작할 부분의 사이즈를 “샘플과 동일하게”라고 명시한다.</dd></div><div class="detail-item"><dt>샘플 미보유</dt><dd>제품을 직접 실측하고 치수와 사진을 전달한다. 레퍼런스 실측값과 최종 제작 치수를 구분한다.</dd></div></dl>' },
-        { n: 17, title: '외형과 사이즈를 먼저 작성한다', text: '전체 치수, 디자인, 재질, 포트·버튼·케이블의 위치와 수량을 구체적으로 명시한다.' },
-        { n: 18, title: '기능 요구사항을 별도로 작성한다', text: '전력량, 고속충전, 작동 방식, 제어·안전 기능 등 외형으로 확인하기 어려운 내용을 정리한다.' },
-        { n: 19, title: '관련 사진과 설명을 함께 배치한다', text: '각 요구사항에 관련 사진을 최대한 첨부한다. 사진에 치수와 위치를 표시하고 설명과 함께 배치한다.', extra: `<div class="sample-grid"><figure class="sample-card">${imageButton('./assets/images/measurement.webp', '버티탭 레퍼런스의 실측 치수 표시')}<figcaption><strong>실측 치수 표시</strong><span>버티탭 예시</span></figcaption></figure><figure class="sample-card">${imageButton('./assets/images/heater-handle.webp', '온풍기 손잡이 부위 참고 사진')}<figcaption><strong>해당 부위 사진 첨부</strong><span>온풍기 예시</span></figcaption></figure></div>` },
-        { n: 20, title: 'AI 이미지의 용도를 명시한다', text: 'AI 이미지를 사용하는 경우 전체 디자인 방향을 설명하기 위한 참고자료라고 명시한다.' },
+        { n: 3, title: '샘플 보유 여부에 맞춰 치수를 전달한다', text: '공장이 레퍼런스 샘플을 보유하고 있는지 확인한다.', extra: '<dl class="detail-grid"><div class="detail-item"><dt>샘플 보유</dt><dd>동일하게 제작할 부분의 사이즈를 “샘플과 동일하게”라고 명시한다.</dd></div><div class="detail-item"><dt>샘플 미보유</dt><dd>제품을 직접 실측하고 치수와 사진을 전달한다. 레퍼런스 실측값과 최종 제작 치수를 구분한다.</dd></div></dl>' + documentExample({"src": "./assets/images/examples/vertitap-measurement-context.webp", "document": "버티탭 작업지시서", "page": 1, "title": "실측값을 사진 위에 표시한다", "description": "원문은 정면 사진에 전체 폭 107mm와 높이 110mm를 표시했다. 이처럼 사진 위에 실측값을 쓰고, 레퍼런스 치수임을 함께 명시한다.", "file": "vertitap.pdf"}) },
+        { n: 4, title: '외형과 사이즈를 먼저 작성한다', text: '눈에 보이는 부분부터 정리한다.', points: ['전체 치수, 디자인, 재질을 명시한다.', '포트·버튼·케이블의 위치와 수량을 명시한다.'], extra: documentExample({"src": "./assets/images/examples/vertitap-rear-layout-context.webp", "document": "버티탭 작업지시서", "page": 3, "title": "부품의 위치와 배치 방향을 지정한다", "description": "스위치를 “후면 하단 왼쪽”으로 지정하고, 케이블 인출구도 표시한 예시다. 부품마다 위치와 방향을 사진과 문장으로 함께 적는다.", "file": "vertitap.pdf"}) },
+        { n: 5, title: '기능 요구사항을 별도로 작성한다', text: '외형으로 확인하기 어려운 성능과 작동 조건을 별도로 정리한다.', points: ['전력량과 충전 규격·출력을 명시한다.', '작동 방식, 조작 방법, 안전 기능을 명시한다.'], extra: documentExample({"src": "./assets/images/examples/heater-control-safety-context.webp", "document": "온풍기 작업지시서", "page": 2, "title": "기능의 수치와 작동 조건을 적는다", "description": "1·2·4·8시간 타이머와 메인 스위치를 켠 뒤 조작하는 순서를 적은 예시다. 기능 이름만 쓰지 말고 수치와 작동 조건을 함께 명시한다.", "file": "heater.pdf"}) },
+        { n: 6, title: '관련 사진과 설명을 함께 배치한다', text: '수정할 부분의 사진과 요구사항을 같은 위치에 배치한다.', points: ['사진에 치수나 수정 위치를 표시한다.', '표시한 부분을 어떻게 바꿀지 바로 옆에 설명한다.'], extra: documentExample({"src": "./assets/images/examples/heater-handle-storage-context.webp", "document": "온풍기 작업지시서", "page": 1, "title": "사진 옆에 해당 부위의 요구사항을 적는다", "description": "손잡이, 1.7m 전원선, 전원선 보관 구조를 각각 사진 옆에 적었다. 한 행에는 하나의 요구사항을 한국어와 중국어로 나란히 작성한다.", "file": "heater.pdf"}) },
+        { n: 7, title: 'AI 이미지의 용도를 명시한다', text: 'AI 이미지를 사용하는 경우 전체 디자인 방향을 설명하기 위한 참고자료라고 명시한다.' },
       ] },
       { id: 'brief-complete', title: '제작 조건과 회신 항목', steps: [
-        { n: 21, title: '나머지 제작 조건을 작성한다', text: '제품에 맞게 아래 항목을 정리한다.', extra: '<ul class="compact-list"><li>제품명 · 담당자 · 일정 · 출시 목표</li><li>색상 · 표면 처리 · 부속품과 수량</li><li>인증 요구사항 · 특허 출원 여부 · 가격 예산</li></ul>' },
-        { n: 22, title: '한국어와 중국어를 함께 작성한다', text: '실제 작업지시서는 한국어와 중국어를 함께 작성한다. 두 언어의 요구사항, 수치, 단위를 일치시킨다.' },
-        { n: 23, title: '공장 회신 칸을 마련한다', text: '공장이 항목별 제작 가능 여부, 변경 제안, 의견을 적을 수 있도록 회신 칸을 마련한다.' },
-      ], note: notice('예시 재사용 시 확인사항', '예시의 수치와 조건은 제작할 제품에 맞게 다시 확인한다. 온풍기 원문에는 일부 한중 수치 차이가 있으므로 대조 후 사용한다.') },
+        { n: 8, title: '나머지 제작 조건을 작성한다', text: '제품에 맞게 아래 항목을 정리한다.', extra: '<ul class="compact-list"><li>제품명 · 담당자 · 일정 · 출시 목표</li><li>색상 · 표면 처리 · 부속품과 수량</li><li>인증 요구사항 · 특허 출원 여부 · 가격 예산</li></ul>' },
+        { n: 9, title: '한국어와 중국어를 함께 작성한다', text: '실제 작업지시서는 한국어와 중국어를 함께 작성한다. 두 언어의 요구사항, 수치, 단위를 일치시킨다.' },
+        { n: 10, title: '공장 회신 칸을 마련한다', text: '공장이 항목별 제작 가능 여부, 변경 제안, 의견을 적을 수 있도록 회신 칸을 마련한다.' },
+      ] },
     ],
   },
   {
     id: 'quote', title: '전달·견적확인', summary: '공장의 이해와 제작 가능 여부를 확인한 뒤 수량·가격을 협의한다.',
     groups: [
       { id: 'quote-review', title: '전달과 내용 확인', steps: [
-        { n: 24, title: '작업지시서와 자료를 전달한다', text: '레퍼런스와 제작 의도를 설명하고, 작업지시서와 사진·치수 자료를 공장에 전달한다.' },
-        { n: 25, title: '항목별 이해와 제작 가능 여부를 확인한다', text: '작업지시서의 이해 여부를 항목별로 확인한다. 제작 가능 여부와 변경이 필요한 부분에 대한 답변을 받는다.' },
-        { n: 26, title: '설명을 보완하고 미회신 항목을 확인한다', text: '불명확한 내용은 사진·치수·설명으로 보완한다. 회신하지 않은 항목은 다시 확인한다.' },
+        { n: 11, title: '작업지시서와 자료를 전달한다', text: '레퍼런스와 제작 의도를 설명한다. 작업지시서와 사진·치수 자료를 함께 전달한다.' },
+        { n: 12, title: '항목별 이해와 제작 가능 여부를 확인한다', text: '작업지시서의 이해 여부를 항목별로 확인한다. 제작 가능 여부와 변경이 필요한 부분에 대한 답변을 받는다.' },
+        { n: 13, title: '설명을 보완하고 미회신 항목을 확인한다', text: '불명확한 내용은 사진·치수·설명으로 보완한다. 회신하지 않은 항목은 다시 확인한다.' },
       ] },
       { id: 'quote-confirm', title: '변경사항과 최종 견적', steps: [
-        { n: 27, title: '확정한 변경사항을 문서에 반영한다', text: '공장의 변경 제안과 사유를 검토한다. 확정한 변경사항을 한국어와 중국어에 동일하게 반영한 뒤 다시 전달한다.' },
-        { n: 28, title: '주문수량과 가격을 협의한다', text: '공장의 이해를 확인한 뒤 주문수량과 가격을 협의한다. 초기 레퍼런스 제품 기준 견적과 구분해 기록한다.' },
+        { n: 14, title: '확정한 변경사항을 문서에 반영한다', text: '공장의 변경 제안과 사유를 검토한다. 확정한 변경사항을 한국어와 중국어에 동일하게 반영한 뒤 다시 전달한다.' },
+        { n: 15, title: '주문수량과 가격을 협의한다', text: '공장의 이해를 확인한 뒤 주문수량과 가격을 협의한다. 초기 레퍼런스 제품 기준 견적과 구분해 기록한다.' },
       ] },
     ],
   },
@@ -94,9 +96,9 @@ function informationTable() {
 }
 
 const resources = [
-  { title: '온풍기 작업지시서', meta: 'PDF · 3쪽 · 한국어·중국어', file: 'heater.pdf', description: '제품 배경과 부위별 사진, 외형·기능 요구사항의 작성 방식을 참고한다.' },
-  { title: '버티탭 작업지시서', meta: 'PDF · 5쪽 · 한국어·중국어', file: 'vertitap.pdf', description: '실측 치수와 디자인 변경사항을 사진으로 전달하는 방식을 참고한다.' },
-  { title: '전체 업무절차서', meta: 'PDF · 12쪽', file: 'workflow.pdf', description: '공장 찾기부터 작업지시서 작성과 견적 확인까지 전체 업무 절차를 확인한다.' },
+  { title: '온풍기 작업지시서', meta: 'PDF · 한국어·중국어', file: 'heater.pdf', description: '제품 배경과 부위별 사진, 외형·기능 요구사항의 작성 방식을 참고한다.' },
+  { title: '버티탭 작업지시서', meta: 'PDF · 한국어·중국어', file: 'vertitap.pdf', description: '실측 치수와 디자인 변경사항을 사진으로 전달하는 방식을 참고한다.' },
+  { title: '전체 업무절차서', meta: 'PDF', file: 'workflow.pdf', description: '공장 찾기부터 작업지시서 작성과 견적 확인까지 전체 업무 절차를 확인한다.' },
 ];
 
 const resourceSection = { id: 'resources', title: '참고자료', summary: '업무절차서와 제품별 작업지시서 원본을 확인한다.' };
@@ -110,6 +112,7 @@ const categories = [
 const categoryLinks = [...document.querySelectorAll('[data-category]')];
 const panel = document.querySelector('#guide-content');
 const dialog = document.querySelector('#image-preview');
+const zoomButton = document.querySelector('#preview-zoom');
 let toastTimeout;
 
 function getSection() {
@@ -142,9 +145,9 @@ function render() {
     panel.innerHTML = `<section class="resource-library" aria-label="참고자료 목록">${resources.map((resource) => `<article class="resource-document"><span class="resource-icon" aria-hidden="true">${icons.document}</span><div class="resource-details"><h2>${resource.title}</h2><p class="resource-meta">${resource.meta}</p><p class="resource-description">${resource.description}</p></div><a class="button button-secondary" href="./assets/docs/${resource.file}" target="_blank" rel="noopener noreferrer" aria-label="${resource.title} PDF 열기 · 새 탭">PDF 열기 ${icons.external}</a></article>`).join('')}</section>`;
     return;
   }
-  panel.innerHTML = section.groups.map((group) => `<section class="step-group" id="${group.id}" aria-labelledby="heading-${group.id}"><div class="group-heading"><h2 id="heading-${group.id}">${group.title}</h2></div><div class="steps">${group.steps.map((step) => `<article class="step-card" id="step-${step.n}"><span class="step-number" aria-label="${step.n}번째 단계">${String(step.n).padStart(2, '0')}</span><div class="step-body"><h3>${step.title}</h3><p>${step.text}</p>${step.extra ?? ''}</div></article>`).join('')}</div>${group.note ?? ''}</section>`).join('');
+  panel.innerHTML = section.groups.map((group) => `<section class="step-group" id="${group.id}" aria-labelledby="heading-${group.id}"><div class="group-heading"><h2 id="heading-${group.id}">${group.title}</h2></div><div class="steps">${group.steps.map((step) => `<article class="step-card" id="step-${step.n}"><span class="step-number" aria-label="${step.n}번째 단계">${step.n}</span><div class="step-body"><h3>${step.title}</h3><p>${step.text}</p>${step.points ? `<ul class="step-points">${step.points.map((point) => `<li>${point}</li>`).join('')}</ul>` : ''}${step.extra ?? ''}</div></article>`).join('')}</div>${group.note ?? ''}</section>`).join('');
   panel.insertAdjacentHTML('beforeend', `<div class="section-end-next"><span>${category.title} 더 보기</span><a data-go-section="${related.id}" href="#${related.id}">${related.label} ${icons.arrow}</a></div>`);
-  sidebar.innerHTML = `<div class="toc-card"><h2 id="toc-title">이 페이지 목차</h2><nav class="contents-list" aria-label="${section.title} 목차">${section.groups.map((group, i) => `<button class="contents-link" type="button" data-scroll-target="${group.id}"><span>${String(i + 1).padStart(2, '0')}</span>${group.title}</button>`).join('')}</nav></div>`;
+  sidebar.innerHTML = `<div class="toc-card"><h2 id="toc-title">이 페이지 목차</h2><nav class="contents-list" aria-label="${section.title} 목차">${section.groups.map((group) => `<button class="contents-link" type="button" data-scroll-target="${group.id}">${group.title}</button>`).join('')}</nav></div>`;
 }
 
 function navigate(id, { focus = false } = {}) {
@@ -154,6 +157,15 @@ function navigate(id, { focus = false } = {}) {
   if (focus) document.querySelector('#page-title').focus({ preventScroll: true });
   window.scrollTo({ top: 0, behavior: 'instant' });
 }
+
+function setPreviewZoom(zoomed) {
+  dialog.classList.toggle('is-zoomed', zoomed);
+  zoomButton.setAttribute('aria-pressed', String(zoomed));
+  zoomButton.textContent = zoomed ? '화면에 맞추기' : '원본 크기로 보기';
+  document.querySelector('.lightbox-image-wrap').scrollTo(0, 0);
+}
+
+dialog.addEventListener('close', () => setPreviewZoom(false));
 
 function showToast(message) {
   const toast = document.querySelector('#toast');
@@ -203,12 +215,14 @@ document.addEventListener('click', (event) => {
   if (event.target.closest('[data-copy-link]')) copyLink();
   const preview = event.target.closest('[data-image]');
   if (preview) {
+    setPreviewZoom(false);
     const image = document.querySelector('#preview-image');
     image.src = preview.dataset.image;
     image.alt = preview.dataset.caption;
     document.querySelector('#preview-caption').textContent = preview.dataset.caption;
     dialog.showModal();
   }
+  if (event.target.closest('.lightbox-zoom')) setPreviewZoom(!dialog.classList.contains('is-zoomed'));
   if (event.target.closest('.lightbox-close') || event.target === dialog) dialog.close();
 });
 

@@ -46,7 +46,8 @@
     <div id="toast" class="toast" role="status" aria-live="polite"></div>
     <dialog class="lightbox" id="image-preview" aria-labelledby="preview-caption">
       <button class="lightbox-close" type="button" aria-label="이미지 닫기"><svg viewBox="0 0 24 24" fill="none"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
-      <img id="preview-image" alt="" />
+      <button class="lightbox-zoom" id="preview-zoom" type="button" aria-pressed="false">원본 크기로 보기</button>
+      <div class="lightbox-image-wrap" tabindex="0" role="region" aria-label="참고 이미지. 원본 크기로 확대하면 스크롤하여 확인한다."><img id="preview-image" alt="" /></div>
       <p id="preview-caption" class="lightbox-caption"></p>
     </dialog>
     <noscript><p class="noscript-notice">업무 가이드를 보려면 JavaScript를 활성화한다. <a href="./assets/docs/workflow.pdf">전체 절차서 PDF 열기</a></p></noscript>
