@@ -9,11 +9,226 @@ const escapeHtml = (value) => String(value).replace(/[&<>"']/g, (c) => ({ '&': '
 
 const imageButton = (src, caption, className = '') => `<button class="image-trigger ${className}" type="button" data-image="${src}" data-caption="${escapeHtml(caption)}" aria-label="${escapeHtml(caption)} 확대 보기"><img src="${src}" alt="${escapeHtml(caption)}" loading="lazy" /><span class="image-hint">확대해서 보기 ↗</span></button>`;
 
-const documentExample = ({ src, document, page, title, description, file }) => `<figure class="document-example"><figcaption><span class="example-source">${document} · ${page}쪽 원문</span><strong>${title}</strong><p>${description}</p></figcaption>${imageButton(src, `${document} ${page}쪽 — ${title}`)}<a class="example-original" href="./assets/docs/${file}#page=${page}" target="_blank" rel="noopener noreferrer">원문에서 보기 ${icons.external}</a></figure>`;
+const documentExample = ({ src, document, page, title, description, file }) => `<figure class="document-example"><figcaption><span class="example-source">작성 예시 · ${document} · ${page}쪽 원문</span><strong>${title}</strong><p>${description}</p></figcaption>${imageButton(src, `작성 예시 · ${document} ${page}쪽 — ${title}`)}<a class="example-original" href="./assets/docs/${file}#page=${page}" target="_blank" rel="noopener noreferrer">원문에서 보기 ${icons.external}</a></figure>`;
 
 const notice = (title, text) => `<div class="notice"><span class="notice-title">${title}</span><p>${text}</p></div>`;
 
+const planningSection = {
+  "id": "planning",
+  "title": "제품기획",
+  "summary": "제품과 리뷰를 분석하고, 개선 방향을 정한 뒤 디자인 레퍼런스를 찾는다.",
+  "groups": [
+    {
+      "n": 1,
+      "id": "planning-product",
+      "title": "제품 파악",
+      "actions": [
+        {
+          "title": "상세페이지를 끝까지 확인한다",
+          "text": "상세페이지 전체를 처음부터 끝까지 확인한다."
+        },
+        {
+          "title": "상단 소구점을 확인한다",
+          "text": "상세페이지 최상단에서 가장 먼저 강조하는 내용을 확인한다."
+        },
+        {
+          "title": "판매자의 기획 의도를 파악한다",
+          "text": "판매자가 이 제품에서 가장 중요하게 보는 포인트를 확인한다."
+        },
+        {
+          "title": "제품의 핵심 강점을 정리한다",
+          "text": "디자인·성능·크기·안전성·편의성·가격 중 핵심이 무엇인지 파악한다."
+        },
+        {
+          "title": "제품 스펙을 정리한다",
+          "text": "크기·무게·소재·전원·배터리·출력·사용시간 등을 정리한다."
+        },
+        {
+          "title": "사용 상황을 정리한다",
+          "text": "누가, 어디서, 언제, 어떤 용도로 사용하는지 정리한다."
+        },
+        {
+          "title": "내 생각을 먼저 정리한다",
+          "text": "내가 생각한 장점·단점·개선 포인트를 리뷰를 보기 전에 정리한다."
+        },
+        {
+          "title": "판매자 의도와 내 생각을 비교한다",
+          "text": "판매자가 강조한 내용과 내가 중요하다고 본 내용을 비교한다."
+        },
+        {
+          "title": "나와 다른 의견을 따로 기록한다",
+          "text": "내 생각과 다른 부분은 별도로 기록해 둔다."
+        }
+      ]
+    },
+    {
+      "n": 2,
+      "id": "planning-reviews",
+      "title": "리뷰 파악",
+      "actions": [
+        {
+          "title": "리뷰를 보기 전에 기준을 세운다",
+          "text": "내가 생각한 소구점이 맞는지 확인할 기준을 정리한다."
+        },
+        {
+          "title": "장점 리뷰를 확인한다",
+          "text": "소비자가 반복적으로 칭찬하는 내용을 정리한다."
+        },
+        {
+          "title": "단점 리뷰를 확인한다",
+          "text": "소비자가 반복적으로 불편해하는 내용을 정리한다."
+        },
+        {
+          "title": "제품 자체의 문제를 구분한다",
+          "text": "배송·포장·개인 취향 문제와 제품 자체의 문제를 구분한다."
+        },
+        {
+          "title": "같은 의견이 반복되는지 확인한다",
+          "text": "같은 장점이나 단점이 여러 리뷰에서 반복적으로 나오는지 확인한다."
+        },
+        {
+          "title": "해당 의견의 비중을 확인한다",
+          "text": "전체 리뷰 대비 해당 의견이 어느 정도 나오는지 확인한다."
+        },
+        {
+          "title": "개선 힌트를 찾는다",
+          "text": "“이 부분만 개선되면 좋겠다”처럼 개선 방향을 알려주는 리뷰를 찾는다."
+        },
+        {
+          "title": "Q&A를 확인한다",
+          "text": "구매 전에 소비자가 궁금해하는 부분을 확인한다."
+        }
+      ]
+    },
+    {
+      "n": 3,
+      "id": "planning-validation",
+      "title": "단점 검증",
+      "actions": [
+        {
+          "title": "단점 확정을 보류한다",
+          "text": "리뷰에 나왔다는 이유만으로 바로 제품의 단점으로 확정하지 않는다."
+        },
+        {
+          "title": "내돈내산 블로그를 확인한다",
+          "text": "직접 구매한 실제 사용자도 같은 단점을 말하는지 확인한다."
+        },
+        {
+          "title": "유튜브 사용 영상을 확인한다",
+          "text": "작동 영상과 사용 장면을 보고 소음·크기감 등을 확인한다."
+        },
+        {
+          "title": "다른 판매처의 리뷰를 확인한다",
+          "text": "다른 플랫폼에서도 같은 의견이 나오는지 확인한다."
+        },
+        {
+          "title": "개인차인지 제품 문제인지 판단한다",
+          "text": "개인 취향에 따른 의견인지 실제 제품 문제인지 구분한다."
+        },
+        {
+          "title": "샘플로 확인할 내용을 정리한다",
+          "text": "제품을 주문해 직접 확인해야 할 내용을 정리한다."
+        },
+        {
+          "title": "필요하면 제품을 주문해 최종 확인한다",
+          "text": "필요 시 제품을 주문한 뒤 실제 사용감을 확인한다."
+        }
+      ]
+    },
+    {
+      "n": 4,
+      "id": "planning-direction",
+      "title": "종합 정리",
+      "actions": [
+        {
+          "title": "만들 제품의 방향을 구상한다",
+          "text": "지금까지 파악한 내용을 바탕으로 우리가 만들 제품의 모습을 구상한다."
+        },
+        {
+          "title": "유지할 장점을 정리한다",
+          "text": "소비자가 만족하는 핵심 장점을 정리한다."
+        },
+        {
+          "title": "개선할 단점을 정리한다",
+          "text": "반드시 개선해야 할 단점을 정리한다."
+        },
+        {
+          "title": "바꾸면 안 되는 부분을 정리한다",
+          "text": "소비자가 이미 좋아하는 핵심 구조와 형태를 정리한다."
+        },
+        {
+          "title": "차별화 포인트를 정리한다",
+          "text": "우리 제품에서 다르게 가져갈 부분을 정리한다."
+        },
+        {
+          "title": "개선 방향을 구체화한다",
+          "text": "단점을 어떻게 개선할지 구체적으로 정리한다."
+        },
+        {
+          "title": "추가 확인이 필요한 내용을 정리한다",
+          "text": "아직 판단이 애매한 부분은 따로 정리한다."
+        }
+      ]
+    },
+    {
+      "n": 5,
+      "id": "planning-competitors",
+      "title": "타사 제품 참고",
+      "actions": [
+        {
+          "title": "필요한 정보를 먼저 정리한다",
+          "text": "타사 제품을 보기 전에 내가 필요한 정보를 정리한다."
+        },
+        {
+          "title": "목적에 맞는 제품을 찾는다",
+          "text": "소음·디자인·안전성·조작부·구조 등 참고할 목적에 맞춰 제품을 찾는다."
+        },
+        {
+          "title": "비교 기준을 정한다",
+          "text": "무엇을 비교할지 기준을 정리한다."
+        },
+        {
+          "title": "참고할 부분만 추출한다",
+          "text": "타사 제품 전체가 아니라 필요한 부분만 참고한다."
+        },
+        {
+          "title": "우리 제품에 적용 가능한지 검토한다",
+          "text": "구조·원가·생산 가능성·사용성을 기준으로 적용 가능성을 검토한다."
+        }
+      ]
+    },
+    {
+      "n": 6,
+      "id": "planning-design",
+      "title": "디자인 보기 전 최종 확인",
+      "actions": [
+        {
+          "title": "제품 목표를 확인한다",
+          "text": "제품 방향과 핵심 소구점이 정리되었는지 확인한다."
+        },
+        {
+          "title": "유지할 장점을 확정한다",
+          "text": "반드시 가져갈 장점이 정리되었는지 확인한다."
+        },
+        {
+          "title": "개선할 단점을 확정한다",
+          "text": "개선해야 할 단점이 정리되었는지 확인한다."
+        },
+        {
+          "title": "레퍼런스 기준을 확정한다",
+          "text": "어떤 이미지를 찾아야 하는지 기준을 정리한다."
+        },
+        {
+          "title": "디자인 레퍼런스를 찾기 시작한다",
+          "text": "기준을 정리한 뒤 디자인 이미지·핀터레스트·타사 제품을 살펴본다."
+        }
+      ]
+    }
+  ]
+};
+
 const sectionData = [
+  planningSection,
   {
     id: 'factory', title: '공장 검색·상담', summary: '제조업체를 찾고, 담당자와 제작 가능 여부를 확인한다.',
     groups: [
@@ -48,23 +263,22 @@ const sectionData = [
     ],
   },
   {
-    id: 'brief', title: '작업지시서 작성', summary: '제작 의도를 설명하고, 외형부터 기능까지 구체적으로 작성한다.',
+    id: 'brief', title: '작업지시서 작성', summary: '제품에 맞춰 외형·기능·제작 조건을 작성한다. 아래 세부 사양과 첨부 사진은 작성 방식을 보여주는 예시다.',
     groups: [
       { id: 'brief-reference', title: '레퍼런스와 제작 방향', steps: [
         { n: 1, title: '레퍼런스 제품을 설명한다', text: '시장에서 잘 판매되는 제품을 레퍼런스로 준비한다.', points: ['선정한 공장에 제품의 사진과 링크를 전달한다.', '제품의 주요 특징을 설명한다.', '장점과 단점을 구분해 정리한다.'] },
         { n: 2, title: '유지할 장점과 개선할 단점을 정리한다', text: '레퍼런스에서 가져올 장점과 개선할 단점을 정리한다. 무엇을 바꾸려는지와 왜 그렇게 제작하려는지를 연결해 설명한다.' },
       ] },
       { id: 'brief-details', title: '치수·외형·기능 작성', steps: [
-        { n: 3, title: '샘플 보유 여부에 맞춰 치수를 전달한다', text: '공장이 레퍼런스 샘플을 보유하고 있는지 확인한다.', extra: '<dl class="detail-grid"><div class="detail-item"><dt>샘플 보유</dt><dd>동일하게 제작할 부분의 사이즈를 “샘플과 동일하게”라고 명시한다.</dd></div><div class="detail-item"><dt>샘플 미보유</dt><dd>제품을 직접 실측하고 치수와 사진을 전달한다. 레퍼런스 실측값과 최종 제작 치수를 구분한다.</dd></div></dl>' + documentExample({"src": "./assets/images/examples/vertitap-measurement-context.webp", "document": "버티탭 작업지시서", "page": 1, "title": "실측값을 사진 위에 표시한다", "description": "원문은 정면 사진에 전체 폭 107mm와 높이 110mm를 표시했다. 이처럼 사진 위에 실측값을 쓰고, 레퍼런스 치수임을 함께 명시한다.", "file": "vertitap.pdf"}) },
-        { n: 4, title: '외형과 사이즈를 먼저 작성한다', text: '눈에 보이는 부분부터 정리한다.', points: ['전체 치수, 디자인, 재질을 명시한다.', '포트·버튼·케이블의 위치와 수량을 명시한다.'], extra: documentExample({"src": "./assets/images/examples/vertitap-rear-layout-context.webp", "document": "버티탭 작업지시서", "page": 3, "title": "부품의 위치와 배치 방향을 지정한다", "description": "스위치를 “후면 하단 왼쪽”으로 지정하고, 케이블 인출구도 표시한 예시다. 부품마다 위치와 방향을 사진과 문장으로 함께 적는다.", "file": "vertitap.pdf"}) },
-        { n: 5, title: '기능 요구사항을 별도로 작성한다', text: '외형으로 확인하기 어려운 성능과 작동 조건을 별도로 정리한다.', points: ['전력량과 충전 규격·출력을 명시한다.', '작동 방식, 조작 방법, 안전 기능을 명시한다.'], extra: documentExample({"src": "./assets/images/examples/heater-control-safety-context.webp", "document": "온풍기 작업지시서", "page": 2, "title": "기능의 수치와 작동 조건을 적는다", "description": "1·2·4·8시간 타이머와 메인 스위치를 켠 뒤 조작하는 순서를 적은 예시다. 기능 이름만 쓰지 말고 수치와 작동 조건을 함께 명시한다.", "file": "heater.pdf"}) },
-        { n: 6, title: '관련 사진과 설명을 함께 배치한다', text: '수정할 부분의 사진과 요구사항을 같은 위치에 배치한다.', points: ['사진에 치수나 수정 위치를 표시한다.', '표시한 부분을 어떻게 바꿀지 바로 옆에 설명한다.'], extra: documentExample({"src": "./assets/images/examples/heater-handle-storage-context.webp", "document": "온풍기 작업지시서", "page": 1, "title": "사진 옆에 해당 부위의 요구사항을 적는다", "description": "손잡이, 1.7m 전원선, 전원선 보관 구조를 각각 사진 옆에 적었다. 한 행에는 하나의 요구사항을 한국어와 중국어로 나란히 작성한다.", "file": "heater.pdf"}) },
-        { n: 7, title: 'AI 이미지의 용도를 명시한다', text: 'AI 이미지를 사용하는 경우 전체 디자인 방향을 설명하기 위한 참고자료라고 명시한다.' },
+        { n: 3, title: '샘플을 먼저 공장에 보낸다', text: '레퍼런스 샘플을 우선 공장에 보내 제품을 직접 확인하게 한다. 보낼 샘플이 없으면 제품을 실측해 치수와 사진을 전달한다.', extra: '<dl class="detail-grid"><div class="detail-item"><dt>샘플을 전달한 경우</dt><dd>동일하게 제작할 부분은 “샘플과 동일하게”라고 명시하고, 변경할 부분은 따로 적는다.</dd></div><div class="detail-item"><dt>보낼 샘플이 없는 경우</dt><dd>실측값을 사진에 표시해 전달한다. 레퍼런스 실측값과 최종 제작 치수를 구분한다.</dd></div></dl>' + documentExample({"src": "./assets/images/examples/vertitap-measurement-context.webp", "document": "버티탭 작업지시서", "page": 1, "title": "실측값을 사진 위에 표시한다", "description": "버티탭 정면 사진에 폭 107mm와 높이 110mm를 표시한 예시다. 작성할 때는 해당 제품의 실측값을 사진에 표시한다.", "file": "vertitap.pdf"}) },
+        { n: 4, title: '외형과 사이즈를 먼저 작성한다', text: '제품에 맞춰 눈에 보이는 부분과 필요한 치수를 정리한다.', points: ['작성 항목 예시: 전체 치수, 디자인, 재질.', '포트·버튼·케이블은 부품 예시다. 해당 제품에 필요한 부품의 위치와 수량을 적는다.'], extra: documentExample({"src": "./assets/images/examples/vertitap-rear-layout-context.webp", "document": "버티탭 작업지시서", "page": 3, "title": "부품의 위치와 배치 방향을 지정한다", "description": "버티탭의 스위치를 “후면 하단 왼쪽”으로 지정하고 케이블 인출구를 표시한 예시다. 제품마다 필요한 부품이 다르므로, 해당 제품의 사진에 위치와 방향을 표시한다.", "file": "vertitap.pdf"}) },
+        { n: 5, title: '기능 요구사항을 별도로 작성한다', text: '외형으로 확인하기 어려운 성능과 작동 조건을 정리한다. 아래 예시를 참고해 해당 제품에 필요한 기능을 작성한다.', points: ['성능 항목 예시: 소비전력, 충전 규격·출력.', '작동 조건 예시: 작동 방식, 조작 방법, 안전 기능.'], extra: documentExample({"src": "./assets/images/examples/heater-control-safety-context.webp", "document": "온풍기 작업지시서", "page": 2, "title": "기능의 수치와 작동 조건을 적는다", "description": "온풍기의 1·2·4·8시간 타이머와 메인 스위치를 켠 뒤 조작하는 순서를 적은 예시다. 해당 제품의 기능에 맞춰 수치와 작동 조건을 작성한다.", "file": "heater.pdf"}) },
+        { n: 6, title: '관련 사진과 설명을 함께 배치한다', text: '수정할 부분의 사진과 요구사항을 같은 위치에 배치한다.', points: ['사진에 치수나 수정 위치를 표시한다.', '표시한 부분을 어떻게 바꿀지 바로 옆에 설명한다.'], extra: documentExample({"src": "./assets/images/examples/heater-handle-storage-context.webp", "document": "온풍기 작업지시서", "page": 1, "title": "사진 옆에 해당 부위의 요구사항을 적는다", "description": "온풍기의 손잡이, 1.7m 전원선, 전원선 보관 구조를 사진 옆에 적은 예시다. 제품에 맞는 사진과 요구사항으로 바꾸고, 한국어와 중국어를 함께 작성한다.", "file": "heater.pdf"}) },
+        { n: 7, title: '필요하면 AI 이미지로 기획 방향을 설명한다', text: '아직 세상에 없는 가상의 제품을 보여주기 위해 AI로 이미지를 생성해 전달할 수 있다. 공장이 기획 방향을 더 쉽게 이해하도록 첨부하는 참고 이미지임을 명시한다.' },
       ] },
-      { id: 'brief-complete', title: '제작 조건과 회신 항목', steps: [
-        { n: 8, title: '나머지 제작 조건을 작성한다', text: '제품에 맞게 아래 항목을 정리한다.', extra: '<ul class="compact-list"><li>제품명 · 담당자 · 일정 · 출시 목표</li><li>색상 · 표면 처리 · 부속품과 수량</li><li>인증 요구사항 · 특허 출원 여부 · 가격 예산</li></ul>' },
+      { id: 'brief-complete', title: '제작 조건과 언어', steps: [
+        { n: 8, title: '나머지 제작 조건을 표로 정리한다', text: '아래 표는 작성 항목의 예시다. 제품에 필요한 항목을 추가하거나 제외해 정리한다.', extra: productionConditionsTable() },
         { n: 9, title: '한국어와 중국어를 함께 작성한다', text: '실제 작업지시서는 한국어와 중국어를 함께 작성한다. 두 언어의 요구사항, 수치, 단위를 일치시킨다.' },
-        { n: 10, title: '공장 회신 칸을 마련한다', text: '공장이 항목별 제작 가능 여부, 변경 제안, 의견을 적을 수 있도록 회신 칸을 마련한다.' },
       ] },
     ],
   },
@@ -72,17 +286,30 @@ const sectionData = [
     id: 'quote', title: '전달·견적확인', summary: '공장의 이해와 제작 가능 여부를 확인한 뒤 수량·가격을 협의한다.',
     groups: [
       { id: 'quote-review', title: '전달과 내용 확인', steps: [
-        { n: 11, title: '작업지시서와 자료를 전달한다', text: '레퍼런스와 제작 의도를 설명한다. 작업지시서와 사진·치수 자료를 함께 전달한다.' },
-        { n: 12, title: '항목별 이해와 제작 가능 여부를 확인한다', text: '작업지시서의 이해 여부를 항목별로 확인한다. 제작 가능 여부와 변경이 필요한 부분에 대한 답변을 받는다.' },
-        { n: 13, title: '설명을 보완하고 미회신 항목을 확인한다', text: '불명확한 내용은 사진·치수·설명으로 보완한다. 회신하지 않은 항목은 다시 확인한다.' },
+        { n: 10, title: '작업지시서와 자료를 전달한다', text: '레퍼런스와 제작 의도를 설명한다. 작업지시서와 사진·치수 자료를 함께 전달한다.' },
+        { n: 11, title: '항목별 이해와 제작 가능 여부를 확인한다', text: '작업지시서의 이해 여부를 항목별로 확인한다. 제작 가능 여부와 변경이 필요한 부분에 대한 답변을 받는다.' },
+        { n: 12, title: '설명을 보완하고 미회신 항목을 확인한다', text: '불명확한 내용은 사진·치수·설명으로 보완한다. 회신하지 않은 항목은 다시 확인한다.' },
       ] },
       { id: 'quote-confirm', title: '변경사항과 최종 견적', steps: [
-        { n: 14, title: '확정한 변경사항을 문서에 반영한다', text: '공장의 변경 제안과 사유를 검토한다. 확정한 변경사항을 한국어와 중국어에 동일하게 반영한 뒤 다시 전달한다.' },
-        { n: 15, title: '주문수량과 가격을 협의한다', text: '공장의 이해를 확인한 뒤 주문수량과 가격을 협의한다. 초기 레퍼런스 제품 기준 견적과 구분해 기록한다.' },
+        { n: 13, title: '확정한 변경사항을 문서에 반영한다', text: '공장의 변경 제안과 사유를 검토한다. 확정한 변경사항을 한국어와 중국어에 동일하게 반영한 뒤 다시 전달한다.' },
+        { n: 14, title: '주문수량과 가격을 협의한다', text: '공장의 이해를 확인한 뒤 주문수량과 가격을 협의한다. 초기 레퍼런스 제품 기준 견적과 구분해 기록한다.' },
       ] },
     ],
   },
 ];
+
+function productionConditionsTable() {
+  const rows = [
+    ['제품명 · 담당자', '제품명과 담당자 정보를 적는다.'],
+    ['일정 · 출시 목표', '제작 일정과 목표 출시 시점을 적는다.'],
+    ['색상 · 표면 처리', '원하는 색상과 표면 처리 방식을 적는다.'],
+    ['부속품 · 수량', '함께 제공할 부속품과 각각의 수량을 적는다.'],
+    ['인증 요구사항', '해당 제품에 필요한 인증을 적는다.'],
+    ['특허 출원 여부', '특허 출원 여부를 적는다.'],
+    ['가격 예산', '목표 단가나 예산 범위를 적는다.'],
+  ];
+  return `<div class="table-scroll"><table class="data-table"><caption class="sr-only">제품에 맞게 선택해 작성할 제작 조건 예시</caption><thead><tr><th scope="col">항목 예시</th><th scope="col">작성 내용</th></tr></thead><tbody>${rows.map(([key, value]) => `<tr><th scope="row">${key}</th><td>${value}</td></tr>`).join('')}</tbody></table></div>`;
+}
 
 function informationTable() {
   const rows = [
@@ -98,12 +325,13 @@ function informationTable() {
 const resources = [
   { title: '온풍기 작업지시서', meta: 'PDF · 한국어·중국어', file: 'heater.pdf', description: '제품 배경과 부위별 사진, 외형·기능 요구사항의 작성 방식을 참고한다.' },
   { title: '버티탭 작업지시서', meta: 'PDF · 한국어·중국어', file: 'vertitap.pdf', description: '실측 치수와 디자인 변경사항을 사진으로 전달하는 방식을 참고한다.' },
-  { title: '전체 업무절차서', meta: 'PDF', file: 'workflow.pdf', description: '공장 찾기부터 작업지시서 작성과 견적 확인까지 전체 업무 절차를 확인한다.' },
+  { title: '공장·제작 업무절차서', meta: 'PDF', file: 'workflow.pdf', description: '공장 찾기부터 작업지시서 작성과 견적 확인까지 전체 업무 절차를 확인한다.' },
 ];
 
 const resourceSection = { id: 'resources', title: '참고자료', summary: '업무절차서와 제품별 작업지시서 원본을 확인한다.' };
 
 const categories = [
+  { id: 'planning', title: '제품기획', pages: [{ id: 'planning', label: '기획 과정' }] },
   { id: 'factory', title: '공장찾기', pages: [{ id: 'factory', label: '공장 검색·상담' }, { id: 'selection', label: '샘플 비교·선정' }] },
   { id: 'brief', title: '작업지시서', pages: [{ id: 'brief', label: '작성 방법' }, { id: 'quote', label: '전달·견적확인' }] },
   { id: 'resources', title: '참고자료', pages: [{ id: 'resources', label: '자료 모음' }] },
@@ -131,12 +359,18 @@ function render() {
     if (selected) link.setAttribute('aria-current', 'true');
     else link.removeAttribute('aria-current');
   });
+  const activeLink = categoryLinks.find((link) => link.dataset.category === category.id);
+  const menu = activeLink.parentElement;
+  const bounds = menu.getBoundingClientRect();
+  const linkBounds = activeLink.getBoundingClientRect();
+  if (linkBounds.left < bounds.left) menu.scrollLeft -= bounds.left - linkBounds.left;
+  else if (linkBounds.right > bounds.right) menu.scrollLeft += linkBounds.right - bounds.right;
   const isResources = section.id === 'resources';
   const sidebar = document.querySelector('#guide-sidebar');
   sidebar.hidden = isResources;
   document.querySelector('.content-layout').classList.toggle('is-resources', isResources);
   const pageMenu = document.querySelector('#section-navigation');
-  pageMenu.hidden = isResources;
+  pageMenu.hidden = category.pages.length < 2;
   pageMenu.setAttribute('aria-label', `${category.title} 내 페이지`);
   pageMenu.innerHTML = category.pages.map((page) => `<a class="page-link${page.id === section.id ? ' is-active' : ''}" data-page="${page.id}" href="#${page.id}"${page.id === section.id ? ' aria-current="page"' : ''}>${page.label}</a>`).join('');
   document.querySelector('#section-heading').innerHTML = `<div><h1 id="page-title" tabindex="-1">${section.title}</h1><p class="section-summary">${section.summary}</p></div><div class="section-meta"><button class="copy-link" type="button" data-copy-link>${icons.link}<span>링크 복사</span></button></div>`;
@@ -145,8 +379,12 @@ function render() {
     panel.innerHTML = `<section class="resource-library" aria-label="참고자료 목록">${resources.map((resource) => `<article class="resource-document"><span class="resource-icon" aria-hidden="true">${icons.document}</span><div class="resource-details"><h2>${resource.title}</h2><p class="resource-meta">${resource.meta}</p><p class="resource-description">${resource.description}</p></div><a class="button button-secondary" href="./assets/docs/${resource.file}" target="_blank" rel="noopener noreferrer" aria-label="${resource.title} PDF 열기 · 새 탭">PDF 열기 ${icons.external}</a></article>`).join('')}</section>`;
     return;
   }
+  if (section.id === 'planning') {
+    panel.innerHTML = section.groups.map((group) => `<section class="step-group planning-stage" id="${group.id}" aria-labelledby="heading-${group.id}"><div class="planning-stage-heading"><span class="step-number" aria-label="${group.n}번째 단계">${group.n}</span><h2 id="heading-${group.id}">${group.title}</h2></div><ul class="planning-actions">${group.actions.map((action) => `<li><h3>${action.title}</h3><p>${action.text}</p></li>`).join('')}</ul></section>`).join('');
+  } else {
   panel.innerHTML = section.groups.map((group) => `<section class="step-group" id="${group.id}" aria-labelledby="heading-${group.id}"><div class="group-heading"><h2 id="heading-${group.id}">${group.title}</h2></div><div class="steps">${group.steps.map((step) => `<article class="step-card" id="step-${step.n}"><span class="step-number" aria-label="${step.n}번째 단계">${step.n}</span><div class="step-body"><h3>${step.title}</h3><p>${step.text}</p>${step.points ? `<ul class="step-points">${step.points.map((point) => `<li>${point}</li>`).join('')}</ul>` : ''}${step.extra ?? ''}</div></article>`).join('')}</div>${group.note ?? ''}</section>`).join('');
-  panel.insertAdjacentHTML('beforeend', `<div class="section-end-next"><span>${category.title} 더 보기</span><a data-go-section="${related.id}" href="#${related.id}">${related.label} ${icons.arrow}</a></div>`);
+  }
+  if (related) panel.insertAdjacentHTML('beforeend', `<div class="section-end-next"><span>${category.title} 더 보기</span><a data-go-section="${related.id}" href="#${related.id}">${related.label} ${icons.arrow}</a></div>`);
   sidebar.innerHTML = `<div class="toc-card"><h2 id="toc-title">이 페이지 목차</h2><nav class="contents-list" aria-label="${section.title} 목차">${section.groups.map((group) => `<button class="contents-link" type="button" data-scroll-target="${group.id}">${group.title}</button>`).join('')}</nav></div>`;
 }
 
@@ -207,7 +445,7 @@ document.addEventListener('click', (event) => {
   const navigation = event.target.closest('[data-category], [data-page], [data-go-section], .brand');
   if (navigation && !event.defaultPrevented && event.button === 0 && !event.metaKey && !event.ctrlKey && !event.shiftKey && !event.altKey) {
     event.preventDefault();
-    navigate(navigation.dataset.category ?? navigation.dataset.page ?? navigation.dataset.goSection ?? 'factory', { focus: true });
+    navigate(navigation.dataset.category ?? navigation.dataset.page ?? navigation.dataset.goSection ?? 'planning', { focus: true });
     return;
   }
   const jump = event.target.closest('[data-scroll-target]');

@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#ffffff" />
     <meta name="robots" content="noindex, nofollow" />
-    <meta name="description" content="카고컨테이너 업무 가이드. 공장 찾기부터 샘플 비교, 작업지시서 작성, 견적 확인까지 순서대로 확인한다." />
-    <title>공장찾기 · 카고컨테이너 업무 가이드</title>
+    <meta name="description" content="카고컨테이너 업무 가이드. 제품기획, 공장찾기, 작업지시서 작성과 견적 확인까지 순서대로 확인한다." />
+    <title>제품기획 · 카고컨테이너 업무 가이드</title>
     <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="./styles.css" />
     <script src="./app.js" type="module"></script>
@@ -15,14 +15,14 @@
     <a class="skip-link" href="#guide-content">본문으로 이동</a>
     <header class="site-header">
       <div class="header-inner">
-        <a class="brand" href="#factory" aria-label="카고컨테이너 업무 가이드 첫 화면">
+        <a class="brand" href="#planning" aria-label="카고컨테이너 업무 가이드 첫 화면">
           <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 32 32" fill="none"><rect x="3" y="6" width="26" height="20" rx="2"/><path d="M10 7v18M16 7v18M22 7v18"/></svg></span>
           <span class="brand-copy"><span class="brand-name">CARGO CONTAINER</span><span class="brand-label">업무 가이드</span></span>
         </a>
         <div class="header-actions">
           <a class="button button-secondary" href="./assets/docs/workflow.pdf" target="_blank" rel="noopener noreferrer">
             <svg aria-hidden="true" viewBox="0 0 24 24" fill="none"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 14h8M8 17h5"/></svg>
-            <span>전체 절차서</span><span class="pdf-label">PDF</span>
+            <span>절차서</span><span class="pdf-label">PDF</span>
           </a>
         </div>
       </div>
@@ -30,18 +30,19 @@
     <div class="page-shell">
       <div class="guide-navigation">
         <nav class="category-menu" aria-label="대분류">
-          <a class="category-link is-active" data-category="factory" href="#factory" aria-current="true">공장찾기</a>
+          <a class="category-link is-active" data-category="planning" href="#planning" aria-current="true">제품기획</a>
+          <a class="category-link" data-category="factory" href="#factory">공장찾기</a>
           <a class="category-link" data-category="brief" href="#brief">작업지시서</a>
           <a class="category-link" data-category="resources" href="#resources">참고자료</a>
         </nav>
-        <nav id="section-navigation" class="page-menu" aria-label="공장찾기 내 페이지"></nav>
+        <nav id="section-navigation" class="page-menu" aria-label="하위 페이지" hidden></nav>
       </div>
       <div id="section-heading" class="section-heading"></div>
       <div class="content-layout">
         <aside id="guide-sidebar" class="sidebar" aria-labelledby="toc-title"></aside>
         <main id="guide-content" aria-labelledby="page-title" tabindex="-1"></main>
       </div>
-      <footer class="site-footer"><span>CARGO CONTAINER</span><p>공장 찾기부터 작업지시서까지, 순서대로 확인한다.</p></footer>
+      <footer class="site-footer"><span>CARGO CONTAINER</span><p>제품기획부터 작업지시서까지, 순서대로 확인한다.</p></footer>
     </div>
     <div id="toast" class="toast" role="status" aria-live="polite"></div>
     <dialog class="lightbox" id="image-preview" aria-labelledby="preview-caption">
@@ -50,6 +51,6 @@
       <div class="lightbox-image-wrap" tabindex="0" role="region" aria-label="참고 이미지. 원본 크기로 확대하면 스크롤하여 확인한다."><img id="preview-image" alt="" /></div>
       <p id="preview-caption" class="lightbox-caption"></p>
     </dialog>
-    <noscript><p class="noscript-notice">업무 가이드를 보려면 JavaScript를 활성화한다. <a href="./assets/docs/workflow.pdf">전체 절차서 PDF 열기</a></p></noscript>
+    <noscript><p class="noscript-notice">업무 가이드를 보려면 JavaScript를 활성화한다. <a href="./assets/docs/workflow.pdf">공장·제작 업무절차서 PDF 열기</a></p></noscript>
   </body>
 </html>
