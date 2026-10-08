@@ -269,25 +269,24 @@ const sectionData = [
         { n: 2, title: '레퍼런스 제품 소개', text: '시장에서 잘 판매되는 제품을 레퍼런스로 준비한다.', points: ['선정한 공장에 제품의 사진과 링크를 전달한다.', '제품의 주요 특징을 설명한다.', '장점과 단점을 구분해 정리한다.'] },
         { n: 3, title: '유지할 장점과 개선할 단점', text: '레퍼런스에서 가져올 장점과 개선할 단점을 정리한다. 무엇을 바꾸려는지와 왜 그렇게 제작하려는지를 연결해 설명한다.' },
       ] },
-      { id: 'brief-details', title: '치수·외형·기능 작성', steps: [
+      { id: 'brief-details', title: '치수·외형·기능 작성', guide: { title: 'AI 이미지로 기획 방향 설명', text: '세부 치수와 외형을 설명하기 전에, 아직 없는 가상의 제품은 AI 이미지로 보여줄 수 있다.\n공장이 기획 방향을 이해하도록 첨부한 참고 이미지임을 명시한다.' }, steps: [
         { n: 4, title: '샘플 전달', text: '레퍼런스 샘플을 먼저 공장에 보내 실제 제품을 확인하게 한다.', extra: '<dl class="detail-grid"><div class="detail-item"><dt>샘플을 전달한 경우</dt><dd>동일하게 제작할 부분은 “샘플과 동일하게”라고 명시하고, 변경할 부분은 따로 적는다.</dd></div><div class="detail-item"><dt>보낼 샘플이 없는 경우</dt><dd>제품을 실측하고 치수와 사진을 전달한다. 레퍼런스 실측값과 최종 제작 치수를 구분한다.</dd></div></dl>' + documentExample({"src": "./assets/images/examples/vertitap-measurement-context.webp", "document": "버티탭 작업지시서", "page": 1, "title": "실측값을 사진 위에 표시한다", "description": "버티탭 정면 사진에 폭 107mm와 높이 110mm를 표시한 예시다. 작성할 때는 해당 제품의 실측값을 사진에 표시한다.", "file": "vertitap.pdf"}) },
         { n: 5, title: '외형과 사이즈', text: '제품에 맞춰 눈에 보이는 부분과 필요한 치수를 정리한다.', points: ['외형 항목 예시: 전체 치수, 디자인, 재질.', '포트, 버튼, 케이블은 부품 예시다. 해당 제품에 필요한 부품의 위치와 수량을 적는다.'], extra: documentExample({"src": "./assets/images/examples/vertitap-rear-layout-context.webp", "document": "버티탭 작업지시서", "page": 3, "title": "부품의 위치와 배치 방향을 지정한다", "description": "버티탭의 스위치를 “후면 하단 왼쪽”으로 지정하고 케이블 인출구를 표시한 예시다. 제품마다 필요한 부품이 다르므로, 해당 제품의 사진에 위치와 방향을 표시한다.", "file": "vertitap.pdf"}) },
         { n: 6, title: '기능과 작동 조건', text: '외형으로 확인하기 어려운 성능과 작동 조건은 별도로 정리한다. 아래 예시를 참고해 해당 제품에 필요한 기능을 작성한다.', points: ['성능 항목 예시: 소비전력, 충전 규격, 출력.', '작동 조건 예시: 작동 방식, 조작 방법, 안전 기능.'], extra: documentExample({"src": "./assets/images/examples/heater-control-safety-context.webp", "document": "온풍기 작업지시서", "page": 2, "title": "기능의 수치와 작동 조건을 적는다", "description": "온풍기의 1·2·4·8시간 타이머와 메인 스위치를 켠 뒤 조작하는 순서를 적은 예시다. 해당 제품의 기능에 맞춰 수치와 작동 조건을 작성한다.", "file": "heater.pdf"}) },
         { n: 7, title: '사진과 설명 배치', text: '수정할 부분의 사진과 요구사항을 같은 위치에 배치한다.', points: ['사진에 치수나 수정 위치를 표시한다.', '표시한 부분을 어떻게 바꿀지 바로 옆에 설명한다.'], extra: documentExample({"src": "./assets/images/examples/heater-handle-storage-context.webp", "document": "온풍기 작업지시서", "page": 1, "title": "사진 옆에 해당 부위의 요구사항을 적는다", "description": "온풍기의 손잡이, 1.7m 전원선, 전원선 보관 구조를 사진 옆에 적은 예시다. 제품에 맞는 사진과 요구사항으로 바꾸고, 한국어와 중국어를 함께 작성한다.", "file": "heater.pdf"}) },
-        { n: 8, title: 'AI 이미지로 기획 방향 설명', text: '아직 없는 가상의 제품은 AI로 이미지를 만들어 보여줄 수 있다.\n공장이 기획 방향을 이해하도록 첨부한 참고 이미지임을 명시한다.' },
       ] },
       { id: 'brief-complete', title: '제작 조건과 언어', steps: [
-        { n: 9, title: '제작 조건 정리', text: '아래 표는 작성 항목의 예시다. 제품에 필요한 항목을 추가하거나 제외해 정리한다.', extra: productionConditionsTable() },
-        { n: 10, title: '한국어·중국어 작성', text: '실제 작업지시서는 한국어와 중국어를 함께 작성한다. 두 언어의 요구사항, 수치, 단위를 일치시킨다.' },
+        { n: 8, title: '제작 조건 정리', text: '아래 표는 작성 항목의 예시다. 제품에 필요한 항목을 추가하거나 제외해 정리한다.', extra: productionConditionsTable() },
+        { n: 9, title: '한국어·중국어 작성', text: '실제 작업지시서는 한국어와 중국어를 함께 작성한다. 두 언어의 요구사항, 수치, 단위를 일치시킨다.' },
       ] },
       { id: 'quote-review', title: '전달과 내용 확인', steps: [
-        { n: 11, title: '작업지시서 전달', text: '레퍼런스와 제작 의도를 설명한다. 작업지시서와 사진·치수 자료를 함께 전달한다.' },
-        { n: 12, title: '이해와 제작 가능 여부 확인', text: '작업지시서의 이해 여부를 항목별로 확인한다. 제작 가능 여부와 변경이 필요한 부분에 대한 답변을 받는다.' },
-        { n: 13, title: '설명 보완과 미회신 항목 확인', text: '불명확한 내용은 사진·치수·설명으로 보완한다. 회신하지 않은 항목은 다시 확인한다.' },
+        { n: 10, title: '작업지시서 전달', text: '레퍼런스와 제작 의도를 설명한다. 작업지시서와 사진·치수 자료를 함께 전달한다.' },
+        { n: 11, title: '이해와 제작 가능 여부 확인', text: '작업지시서의 이해 여부를 항목별로 확인한다. 제작 가능 여부와 변경이 필요한 부분에 대한 답변을 받는다.' },
+        { n: 12, title: '설명 보완과 미회신 항목 확인', text: '불명확한 내용은 사진·치수·설명으로 보완한다. 회신하지 않은 항목은 다시 확인한다.' },
       ] },
       { id: 'quote-confirm', title: '변경사항과 최종 견적', steps: [
-        { n: 14, title: '확정한 변경사항 반영', text: '공장의 변경 제안과 사유를 검토한다. 확정한 변경사항을 한국어와 중국어에 동일하게 반영한 뒤 다시 전달한다.' },
-        { n: 15, title: '주문수량과 가격 협의', text: '공장의 이해를 확인한 뒤 주문수량과 가격을 협의한다. 초기 레퍼런스 제품 기준 견적과 구분해 기록한다.' },
+        { n: 13, title: '확정한 변경사항 반영', text: '공장의 변경 제안과 사유를 검토한다. 확정한 변경사항을 한국어와 중국어에 동일하게 반영한 뒤 다시 전달한다.' },
+        { n: 14, title: '주문수량과 가격 협의', text: '공장의 이해를 확인한 뒤 주문수량과 가격을 협의한다. 초기 레퍼런스 제품 기준 견적과 구분해 기록한다.' },
       ] },
     ],
   },
@@ -383,7 +382,7 @@ function render() {
   if (section.id === 'planning') {
     panel.innerHTML = section.groups.map((group) => `<section class="step-group planning-stage" id="${group.id}" aria-labelledby="heading-${group.id}"><div class="planning-stage-heading"><span class="step-number" aria-label="${group.n}번째 단계">${group.n}</span><h2 id="heading-${group.id}">${group.title}</h2></div><ul class="planning-actions">${group.actions.map((action) => `<li><h3>${action.title}</h3><p>${action.text}</p></li>`).join('')}</ul></section>`).join('');
   } else {
-    panel.innerHTML = section.groups.map((group) => `<section class="step-group" id="${group.id}" aria-labelledby="heading-${group.id}"><div class="group-heading"><h2 id="heading-${group.id}">${group.title}</h2></div><div class="steps">${group.steps.map((step) => `<article class="step-card" id="step-${step.n}"><div class="step-heading"><span class="step-number" aria-label="${step.n}번째 단계">${step.n}</span><h3>${step.title}</h3></div><div class="step-body">${paragraphs(step.text)}${step.points ? `<ul class="step-points">${step.points.map((point) => `<li>${point}</li>`).join('')}</ul>` : ''}${step.extra ?? ''}</div></article>`).join('')}</div>${group.note ?? ''}</section>`).join('');
+    panel.innerHTML = section.groups.map((group) => `<section class="step-group" id="${group.id}" aria-labelledby="heading-${group.id}"><div class="group-heading"><h2 id="heading-${group.id}">${group.title}</h2></div>${group.guide ? `<div class="group-guide" role="note" aria-labelledby="guide-${group.id}"><h3 id="guide-${group.id}">${group.guide.title}</h3>${paragraphs(group.guide.text)}</div>` : ''}<div class="steps">${group.steps.map((step) => `<article class="step-card" id="step-${step.n}"><div class="step-heading"><span class="step-number" aria-label="${step.n}번째 단계">${step.n}</span><h3>${step.title}</h3></div><div class="step-body">${paragraphs(step.text)}${step.points ? `<ul class="step-points">${step.points.map((point) => `<li>${point}</li>`).join('')}</ul>` : ''}${step.extra ?? ''}</div></article>`).join('')}</div>${group.note ?? ''}</section>`).join('');
   }
   sidebar.innerHTML = `<div class="toc-card"><h2 id="toc-title">이 페이지 목차</h2><nav class="contents-list" aria-label="${section.title} 목차">${section.groups.map((group) => `<button class="contents-link" type="button" data-scroll-target="${group.id}">${group.title}</button>`).join('')}</nav></div>`;
 }

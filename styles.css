@@ -76,6 +76,9 @@ p, li, dd, td { text-wrap: pretty; }
 .step-group { margin-bottom: 56px; scroll-margin-top: 12px; }
 .group-heading { display: flex; align-items: baseline; gap: 16px; margin-bottom: 6px; padding-bottom: 15px; border-bottom: 1px solid #dcdcdc; }
 .group-heading h2 { font-size: 23px; letter-spacing: -.02em; line-height: 1.45; font-weight: 650; }
+.group-guide { margin: 22px 0 12px; padding: 3px 0 3px 18px; border-left: 2px solid #d7d7d7; }
+.group-guide h3 { font-size: 17px; font-weight: 600; line-height: 1.5; }
+.group-guide p { max-width: 42rem; margin-top: 8px; color: #525252; font-size: 16px; line-height: 1.75; }
 .steps { display: grid; gap: 8px; }
 .step-card { padding: 24px 0; scroll-margin-top: 12px; }
 .step-heading { display: flex; align-items: baseline; gap: 12px; }
